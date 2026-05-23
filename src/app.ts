@@ -3,6 +3,7 @@ import morgan from "morgan";
 import { prisma } from "./prisma/prisma";
 import authRoutes from "./modules/auth/auth.routes";
 import { authMiddleware } from "./middleware/auth.middleware";
+import productRoutes from "./modules/products/product.routes";
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
 app.get("/health", (_req, res) => {
   res.status(200).json({
