@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import { prisma } from "./prisma/prisma";
 import authRoutes from "./modules/auth/auth.routes";
+import { authMiddleware } from "./middleware/auth.middleware";
 
 const app = express();
 
@@ -33,6 +34,13 @@ app.get("/test-db", async (_req, res) => {
       message: "Database connection failed",
     });
   }
+});
+
+app.get("/protected", authMiddleware, (req, res) => {
+  res.json({
+    message: "You are authenticated",
+    user: req.user,
+  });
 });
 
 export default app;
